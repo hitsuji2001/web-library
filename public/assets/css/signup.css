@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.login-form {
+    /* position: absolute; */
+    /* top: 50%; */
+    /* left: 50%; */
+    /* width: 100%; */
+    /* transform: translate(-12%, -50%); */
+}
+
+.username-input {
+    padding: var(--login-padding);
+}
+
+.password-input {
+    padding: var(--login-padding);
+}
+
+.forgot-password {
+    padding: var(--login-padding);
+}
+
+.server-alert {
+    animation-name: fadeIn, stays, fadeOut;
+    animation-duration: 250ms, 3000ms, 1000ms;
+    animation-delay: 0ms, 250ms, 3000ms;
+    animation-timing-function: ease-in, ease-in ,ease-out;
+    animation-iteration-count: 1, 1, 1;
+    visibility: hidden;
+    font-size: 18px;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* .username-pasword-holder { */
+    
+/* } */
+
+/* .name-email-holder { */
+
+/* } */
+
+@keyframes fadeIn {
+    0%   {
+	opacity: 0;
+	visibility: hidden;
+    }
+    100% {
+	opacity: 1;
+	visibility: visible;
+    }
+}
+
+@keyframes stays {
+    0%   {
+	opacity: 1;
+	visibility: visible;
+    }
+    100% {
+	opacity: 1;
+	visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    0%   {
+	opacity: 1;
+	visibility: visible;
+    }
+    100% {
+	opacity: 0;
+	visibility: hidden;
+    }
+}

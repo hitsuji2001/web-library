@@ -1,0 +1,114 @@
+.main-dashboard {
+    margin: 100px;
+}
+
+.dashboard-card {
+    margin: 15px;
+}
+
+.button-pop-up {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-pop-up i {
+    margin: 2px;
+}
+
+.card-text-stuff {
+    margin-left: 5px;
+    margin-top: 0.25px;
+}
+
+.card-text-stuff-holder i {
+    font-size: 18px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.logo-containter {
+    display: flex;
+    width: 15%;
+}
+
+.logo-title {
+    margin-left: 10px;
+    margin-top: 15px;
+    font-size: 24px;
+    line-height: 5px;
+}
+
+.user-container {
+    margin: 10px;
+}
+
+.user-avatar:hover {
+    background-color: #007bffdd;
+}
+
+.add-book-btn {
+    margin: 10px;
+}
+
+.add-book-btn-text {
+    padding-top: 5px;
+}
+
+.header-menu {
+    font-size: 24px;
+    margin-top: 5px;
+}
+
+.header-menu p {
+    color: #ffffff;
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+
+.server-alert {
+    animation-name: fadeIn, stays, fadeOut;
+    animation-duration: 250ms, 3000ms, 1000ms;
+    animation-delay: 0ms, 250ms, 3000ms;
+    animation-timing-function: ease-in, ease-in ,ease-out;
+    animation-iteration-count: 1, 1, 1;
+    visibility: hidden;
+    font-size: 18px;
+}
+
+@keyframes fadeIn {
+    0%   {
+	opacity: 0;
+	visibility: hidden;
+    }
+    100% {
+	opacity: 1;
+	visibility: visible;
+    }
+}
+
+@keyframes stays {
+    0%   {
+	opacity: 1;
+	visibility: visible;
+    }
+    100% {
+	opacity: 1;
+	visibility: visible;
+    }
+}
+
+@keyframes fadeOut {
+    0%   {
+	opacity: 1;
+	visibility: visible;
+    }
+    100% {
+	opacity: 0;
+	visibility: hidden;
+    }
+}

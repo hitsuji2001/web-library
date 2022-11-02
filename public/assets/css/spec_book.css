@@ -1,0 +1,38 @@
+.main-section {
+    margin: 20px;
+    padding: 20px;
+}
+
+.drag-drop-container {
+    display: grid;
+}
+
+.drag-input {
+    opacity: 0;
+    /* opacity: 0.3; */
+    /* background-color: green; */
+}
+
+.drag-drop-item {
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+
+.drag-drop-container-text {
+    margin: 7% 14%;
+}
+
+.drag-drop-container-text i {
+    font-size: 3em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

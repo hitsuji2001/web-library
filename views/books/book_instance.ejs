@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/assets/icons/open-book.png">
+    <link href="/static/assets/css/spec_book.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/dashboard.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <section class="dashboard-header">
+      <div class="header-container bg-info">
+	<% if (locals.user_type != 'anonymous') { %>
+	<a href="/books" class="btn btn-warning rounded">
+	  <div class="logo-containter">
+	    <img src="/static/assets/images/reading.png" height=54px>
+	    <div class="logo-title">
+	      <p>Hitsuji's</p>
+	      <p>bookstore</p>
+	    </div>
+	  </div>
+	</a>
+	<% } else { %>
+	<a href="/books/anonymous" class="btn btn-warning rounded">
+	  <div class="logo-containter">
+	    <img src="/static/assets/images/reading.png" height=54px>
+	    <div class="logo-title">
+	      <p>Hitsuji's</p>
+	      <p>bookstore</p>
+	    </div>
+	  </div>
+	</a>	
+	<% } %>
+
+	<div class="header-menu">
+	  <p><%= locals.h1_title %> book</p>
+	</div>
+
+	<div class="d-sm-flex">
+	  <% if ((locals.method == 'GET' || locals.h1_title == 'Edit') && locals.user_type != 'anonymous') { %>
+
+	  <div data-toggle="modal" data-target="#exampleModal">
+	    <i class=" btn btn-primary mr-3 mt-3 mb-3 fi-rr-trash" data-toggle="tooltip" title="Delete"></i>
+	  </div>
+	  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this book?</h5>
+		</div>
+		<div class="modal-footer">
+		  <a href="/books/delete/<%= locals.book.id %>">
+		    <button type="button" class="btn btn-danger">Yes</button>
+		  </a>
+		  <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  <% } %>
+	  <% if (locals.method == 'GET' && locals.h1_title != 'Edit' && locals.user_type != 'anonymous') { %>
+	  <a href="/books/edit/<%= locals.book.id %>" class="btn btn-primary mr-3 mt-3 mb-3" data-toggle="tooltip" title="Edit">
+	    <i class="fi fi-rr-pencil-ruler"></i>
+	  </a>
+	  <% } %>
+
+	  <div class="user-container border rounded-circle border-primary">
+
+	    <div class="dropleft">
+	      <a href="#" id="userDropDown" data-toggle="dropdown">
+		<img src="/static/assets/images/default-avatar.webp" width=48px height=48px class="user-avatar img-fuild rounded-circle">
+	      </a>
+	      <div class="dropdown-menu" role="menu" aria-labelledby="userDropDown">
+		<a class="dropdown-item" href="#" tabindex="-1">See profile</a>
+		<a class="dropdown-item" href="/" tabindex="-1">Logout</a>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+
+      </div>
+
+    </section>
+
+    <section class="main-section border border-primary rounded-lg">
+
+      <form class="needs-validation d-sm-flex"
+	    action="<%= locals.action %>"
+	    method="<%= locals.method %>"
+	    novalidate
+	    <%= locals.method == 'POST' ? 'enctype=multipart/form-data' : '' %>>
+
+	<div class="form-group col w-50">
+
+	  <div class="input-group mb-3">
+	    <div class="input-group-prepend">
+	      <span class="input-group-text" for="validateTitle" id="inputGroup-sizing-default"><strong>Tên sách</strong></span>
+	    </div>
+	    <input class="form-control"
+		   type="text" name="title"
+		   value="<%= locals.book.title %>"
+		   aria-label="Tên sách"
+		   aria-describedby="inputGroup-sizing-default"
+		   placeholder="Title"
+		   id="validateTitle"
+		   required
+		   <%= locals.method == 'GET' ? 'readonly' : '' %>>
+	    <div class="invalid-feedback">Must enter book's title</div>
+	  </div>
+
+	  <div class="input-group mb-3">
+	    <div class="input-group-prepend">
+	      <span class="input-group-text" for="validateAuthor" id="inputGroup-sizing-default"><strong>Tác giả</strong></span>
+	    </div>
+	    <input class="form-control"
+		   type="text"
+		   name="author"
+		   value="<%= locals.book.author %>"
+		   aria-label="Tác giả"
+		   aria-describedby="inputGroup-sizing-default"
+		   placeholder="Author"
+		   id="validateAuthor"
+		   required
+		   <%= locals.method == 'GET' ? 'readonly' : '' %>>
+	    <div class="invalid-feedback">Must provide book's author</div>
+	  </div>
+
+	  <div class="input-group mb-3">
+	    <div class="input-group-prepend">
+	      <span class="input-group-text"><strong>Mô tả</strong></span>
+	    </div>
+	    <textarea class="form-control"
+		      rows="5" name="description"
+		      placeholder="Description"
+		      aria-label="Mô tả"
+		      oninput='this.style.height = ""; this.style.height = this.scrollHeight + "px"'
+		      <%= locals.method == 'GET' ? 'readonly' : '' %>><%= locals.book.description %></textarea>
+	  </div>
+
+	  <div class="input-group mb-3">
+	    <div class="input-group-prepend">
+	      <span class="input-group-text" id="inputGroup-sizing-default"><strong>Ngày phát hành</strong></span>
+	    </div>
+	    <input class="form-control"
+		   type="date" name="release_date"
+		   value="<%= locals.book.release_date %>"
+		   placeholder="mm-dd-yyyy"
+		   aria-label="Ngày phát hành"
+		   aria-describedby="inputGroup-sizing-default"
+		   <%= locals.method == 'GET' ? 'readonly' : '' %>>
+	  </div>
+
+	  <div class="d-sm-flex">
+	    <div class="input-group mb-3">
+	      <div class="input-group-prepend">
+		<label class="input-group-text"><strong>Số trang</strong></label>
+	      </div>
+	      <input class="form-control"
+		     type="number" name="pages"
+		     value="<%= locals.book.pages %>"
+		     aria-label="Số trang"
+		     aria-describedby="inputGroup-sizing-default"
+		     placeholder="Number of pages"
+		     required
+		     <%= locals.method == 'GET' ? 'readonly' : '' %>>
+	    </div>
+
+	    <div class="input-group mb-3">
+	      <div class="input-group-prepend">
+		<label class="input-group-text" for="validateCategory"><strong>Thể loại</strong></label>
+	      </div>
+	      <input class="form-control"
+		     type="text" name="category"
+		     value="<%= locals.book.category %>"
+		     aria-label="Thể loại"
+		     aria-describedby="inputGroup-sizing-default"
+		     placeholder="Category"
+		     id="validateCategory"
+		     required
+		     <%= locals.method == 'GET' ? 'readonly' : '' %>>
+	    </div>
+
+	  </div>
+	    <section class="server-alert w-100" style="<%= locals.alert == undefined ? 'display:none' : 'display:block' %>">
+	      <div class="bg-danger mt-3 border rounded w-50">
+		<i class="fi fi-rr-exclamation"></i>
+		<span><%= locals.alert %></span>
+	      </div>
+	    </section>
+
+	</div>
+
+	<div class="w-50">
+	  <div class="form-group col">
+            <label for="Image" class="input-group-text mb-3"><strong>Ảnh bìa</strong></label>
+	    <div onclick="clearImage()"
+		 class="btn btn-info btn-sm mt-3 mb-3"
+		 <%= locals.method == 'GET' ? 'style=display:none;' : '' %>>
+	      Clear image
+	    </div>
+
+	    <div id="drag-drop-container"
+		 <%= locals.method == 'GET' ? 'style=display:none;' :
+		     locals.book.cover_image == '' ? '' : 'style=display:none;'
+		     %>>
+	      <div class="drag-drop-container container-fluid border border-info rounded text-center">
+		<div class="drag-drop-item">
+		  <div class="drag-drop-container-text text-secondary">
+		    <i class="fi fi-rs-cloud-upload-alt"></i>
+		    <p class="display-3">Drag & drop file here</p>
+		  </div>
+		</div>
+
+		<input class="drag-input drag-drop-item"
+		       name="cover_image" type="file"
+		       id="formFile" onchange="preview()"
+		       accept="image/*"
+		       <%= locals.method == 'GET' ? 'style=display:none;' : '' %>>
+	      </div>
+	    </div>
+
+	    <% if (locals.user_type != 'anonymous') { %>
+	    <div><img id="frame" src="<%= locals.book.cover_image %>"
+		      style="max-height: 720px; max-width: 625px;"
+		      class="img-fluid mb-3"/></div>
+	    <% } else { %>
+	    <div><img id="frame" src="<%= '../' + locals.book.cover_image %>"
+		      style="max-height: 720px; max-width: 625px;"
+		      class="img-fluid mb-3"/></div>
+	    <% } %>
+	  </div>
+
+	  <div class="form-group col">
+	    <button type="submit"
+		    class="btn btn-primary btn-sm btn-block"
+		    <%= locals.method == 'GET' ? 'style=display:none;' : '' %>
+		    >Submit</button>
+	  </div>
+	</div>
+	<input type="number" style="display: none" name="bookID" value="<%= locals.method == 'PUT' ? book.id : '' %>">
+      </form>
+    </section>
+    
+    <script>
+      function preview() {
+	  frame.src = URL.createObjectURL(event.target.files[0]);
+	  document.getElementById('drag-drop-container').style.display = 'none';
+      }
+
+      function clearImage() {
+	  document.getElementById('formFile').value = null;
+	  document.getElementById('drag-drop-container').style.display = 'block';
+	  frame.src = '';
+      }
+
+      (function() {
+	  'use strict';
+	  window.addEventListener('load', function() {
+	      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	      var forms = document.getElementsByClassName('needs-validation');
+	      // Loop over them and prevent submission
+	      var validation = Array.prototype.filter.call(forms, function(form) {
+		  form.addEventListener('submit', function(event) {
+		      if (form.checkValidity() === false) {
+			  event.preventDefault();
+			  event.stopPropagation();
+		      }
+		      form.classList.add('was-validated');
+		  }, false);
+	      });
+	  }, false);
+      })();
+    </script>
+
+  </body>
+</html>
