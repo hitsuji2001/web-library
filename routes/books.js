@@ -7,6 +7,13 @@ router.use('/anonymous/', anonymousRouter);
 
 function validate(book) {
     return new Promise(function(resolve, reject) {
+	if (book.title.trim() == '' || book.author.trim() == '' || book.category.trim() == '') resolve(false);
+	else resolve(true);
+    });
+}
+
+function validate_new(book) {
+    return new Promise(function(resolve, reject) {
 	mysql.getConnection((err, connection) => {
 	    if (err) throw err;
 	    connection.query('SELECT * FROM Books WHERE title = (?)', [book.title], (error, rows, fields) => {
@@ -75,7 +82,7 @@ router.get('/add', (req, res) => {
 
 router.post('/add', (req, res) => {
     let book = get_book(req);
-    validate(book).then(function (valid) {
+    validate_new(book).then(function (valid) {
 	if (valid) {
 	    mysql.getConnection((err, connection) => {
 		if (err) throw err;
@@ -141,11 +148,12 @@ router.post('/edit/:bookID', (req, res) => {
 
     let index = req.params.bookID;
     let book = get_book(req);
-    if (validate(book) == true) {
-	mysql.getConnection((err, connection) => {
-	    if (err) throw err;
-	    connection.query(
-		`UPDATE Books
+    validate(book).then(function (valid) {
+	if (valid) {
+	    mysql.getConnection((err, connection) => {
+		if (err) throw err;
+		connection.query(
+		    `UPDATE Books
                  SET
                      title = ?,
                      author = ?,
@@ -156,21 +164,22 @@ router.post('/edit/:bookID', (req, res) => {
                      cover_image = ?
                  WHERE
                      id = ${index}`, Object.values(book),
-		(error, result) => {
-		    connection.release();
-		    if (error) throw error;
-		    console.log(result.affectedRows + " record(s) updated");
-		    res.redirect('/books');
-		});
-	});
-    } else {
-	res.render('books/book_instance.ejs', {
-	    method: 'POST',
-	    h1_title: 'Edit',
-	    action: `/books/edit/` + index,
-	    book: book,
-	});
-    }
+		    (error, result) => {
+			connection.release();
+			if (error) throw error;
+			console.log(result.affectedRows + " record(s) updated");
+			res.redirect('/books');
+		    });
+	    });
+	} else {
+	    res.render('books/book_instance.ejs', {
+		method: 'POST',
+		h1_title: 'Edit',
+		action: `/books/edit/` + index,
+		book: book,
+	    });
+	}
+    });
 });
 
 router.get('/delete/:bookID', (req, res) => {
