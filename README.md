@@ -16,7 +16,7 @@ Go to server.js file and flush the database with entries by uncomment this line 
 
 ```javascript
 ...
-// reset_db.reset_database();
+reset_db.reset_database();
 ...
 ```
 
@@ -24,14 +24,20 @@ And again uncomment this line right below it and then comment it again.
 
 ```javascript
 ...
-// reset_db.insert_data();
+reset_db.insert_data();
 ...
 ```
 
 [TODO]: `This should be fixed` Find a way to make this only 1 line.
 
+And then run the server by 
+
+```console 
+$ nodemon
+```
+
 ### Login
 
 You can create your account if you want. Or login with this account  
-`account:` admin
+`account:` admin  
 `password:` 123456
