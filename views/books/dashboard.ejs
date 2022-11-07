@@ -64,106 +64,108 @@
 
   </section>
 
-  <section class="background-image-container">
-    <img src="/static/assets/images/background.jpg">
-  </section>
+  <section class="content-after-header">
+    <section class="background-image-container">
+      <img src="/static/assets/images/background.jpg">
+    </section>
 
-  <section class="main-dashboard">
-    <div class="d-sm-flex flex-wrap">
-      <% for (let i = books.length - 1; i >= 0; i--) { %>
-      <div class="dashboard-card card border-info mb-3" style="width: 16rem;">
+    <section class="main-dashboard">
+      <div class="d-sm-flex flex-wrap">
+	<% for (let i = books.length - 1; i >= 0; i--) { %>
+	<div class="dashboard-card card border-info mb-3" style="width: 16rem;">
 
-	<% if (locals.user_type != 'anonymous') { %>
-	<% if (!books[i].cover_image) { %>
-	<a href="books/view/<%= books[i].id %>">
-	  <img class="dashboard-card-img card-img-top"
-	       src="/static/assets/images/default-cover.jpg"
-	       height=256px alt="book's cover">
-	</a>
-	<% } else { %>
-	<a href="books/view/<%= books[i].id %>">
-	  <img class="dashboard-card-img card-img-top"
-	       src="<%= books[i].cover_image %>"
-	       height=256px alt="book's cover">
-	</a>
-	<% } %>
-	<% } else { %>
-	<% if (!books[i].cover_image) { %>
-	<a href="anonymous/view/<%= books[i].id %>">
-	  <img class="dashboard-card-img card-img-top"
-	       src="/static/assets/images/default-cover.jpg"
-	       height=256px alt="book's cover">
-	</a>
-	<% } else { %>
-	<a href="anonymous/view/<%= books[i].id %>">
-	  <img class="dashboard-card-img card-img-top"
-	       src="<%= books[i].cover_image %>"
-	       height=256px alt="book's cover">
-	</a>
-	<% } %>
-	<% } %>
+	  <% if (locals.user_type != 'anonymous') { %>
+	  <% if (!books[i].cover_image) { %>
+	  <a href="books/view/<%= books[i].id %>">
+	    <img class="dashboard-card-img card-img-top"
+		 src="/static/assets/images/default-cover.jpg"
+		 height=256px alt="book's cover">
+	  </a>
+	  <% } else { %>
+	  <a href="books/view/<%= books[i].id %>">
+	    <img class="dashboard-card-img card-img-top"
+		 src="<%= books[i].cover_image %>"
+		 height=256px alt="book's cover">
+	  </a>
+	  <% } %>
+	  <% } else { %>
+	  <% if (!books[i].cover_image) { %>
+	  <a href="anonymous/view/<%= books[i].id %>">
+	    <img class="dashboard-card-img card-img-top"
+		 src="/static/assets/images/default-cover.jpg"
+		 height=256px alt="book's cover">
+	  </a>
+	  <% } else { %>
+	  <a href="anonymous/view/<%= books[i].id %>">
+	    <img class="dashboard-card-img card-img-top"
+		 src="<%= books[i].cover_image %>"
+		 height=256px alt="book's cover">
+	  </a>
+	  <% } %>
+	  <% } %>
 
-	<div class="card-text-stuff-holder d-sm-flex">
-	  <div class="card-footer text-muted" style="width: 68%;">
-	    <div class="d-sm-flex">
-	      <i class="fi fi-rr-book-bookmark"></i>
-	      <span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].title %></span>
-	    </div>
-
-	    <div class="card-text-stuff-holder d-sm-flex">
-	      <i class="fi fi-rr-book-open-reader"></i>
-	      <span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].author %> </span>
-	    </div>
-	    <div class="card-text-stuff-holder d-sm-flex">
-	      <i class="fi fi-rr-resources"></i>
-	      <span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].category %> </span>
-	    </div>
-	  </div>
-
-	  <div class="card-footer bg-light">
-	    <div class="button-pop-up">
-	      <% if (locals.user_type != 'anonymous') { %>
-	      <a href="books/view/<%= books[i].id %>">
-		<i class="btn btn-info btn-sm fi fi-rr-search-alt" data-toggle="tooltip" title="View"></i>
-	      </a>
-	      <% } else { %>
-	      <a href="anonymous/view/<%= books[i].id %>">
-		<i class="btn btn-info btn-sm fi fi-rr-search-alt" data-toggle="tooltip" title="View"></i>
-	      </a>
-	      <% } %>
-	      <% if (locals.user_type != 'anonymous') { %>
-	      <a href="books/edit/<%= books[i].id %>">
-		<i class="btn btn-info btn-sm fi fi-rr-pencil-ruler" data-toggle="tooltip" title="Edit"></i>
-	      </a>
-
-	      <div data-toggle="modal" data-target="#popUpWarning-<%= i %>">
-		<i class="btn btn-info btn-sm fi fi-rr-trash" data-toggle="tooltip" title="Delete"></i>
+	  <div class="card-text-stuff-holder d-sm-flex">
+	    <div class="card-footer text-muted" style="width: 68%;">
+	      <div class="d-sm-flex">
+		<i class="fi fi-rr-book-bookmark"></i>
+		<span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].title %></span>
 	      </div>
-	      <div class="modal fade" id="popUpWarning-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-		  <div class="modal-content">
-		    <div class="modal-header">
-		      <h5 class="modal-title" id="modal-label">Are you sure you want to delete this book?</h5>
-		    </div>
-		    <div class="modal-footer">
-		      <a href="books/delete/<%= books[i].id %>">
-			<button type="button" class="btn btn-danger">Yes</button>
-		      </a>
-		      <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+
+	      <div class="card-text-stuff-holder d-sm-flex">
+		<i class="fi fi-rr-book-open-reader"></i>
+		<span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].author %> </span>
+	      </div>
+	      <div class="card-text-stuff-holder d-sm-flex">
+		<i class="fi fi-rr-resources"></i>
+		<span class="card-text-stuff card-subtitle mb-2 text-muted text-capitalize text-truncate" style="display:block;"><%= books[i].category %> </span>
+	      </div>
+	    </div>
+
+	    <div class="card-footer bg-light">
+	      <div class="button-pop-up">
+		<% if (locals.user_type != 'anonymous') { %>
+		<a href="books/view/<%= books[i].id %>">
+		  <i class="btn btn-info btn-sm fi fi-rr-search-alt" data-toggle="tooltip" title="View"></i>
+		</a>
+		<% } else { %>
+		<a href="anonymous/view/<%= books[i].id %>">
+		  <i class="btn btn-info btn-sm fi fi-rr-search-alt" data-toggle="tooltip" title="View"></i>
+		</a>
+		<% } %>
+		<% if (locals.user_type != 'anonymous') { %>
+		<a href="books/edit/<%= books[i].id %>">
+		  <i class="btn btn-info btn-sm fi fi-rr-pencil-ruler" data-toggle="tooltip" title="Edit"></i>
+		</a>
+
+		<div data-toggle="modal" data-target="#popUpWarning-<%= i %>">
+		  <i class="btn btn-info btn-sm fi fi-rr-trash" data-toggle="tooltip" title="Delete"></i>
+		</div>
+		<div class="modal fade" id="popUpWarning-<%= i %>" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+			<h5 class="modal-title" id="modal-label">Are you sure you want to delete this book?</h5>
+		      </div>
+		      <div class="modal-footer">
+			<a href="books/delete/<%= books[i].id %>">
+			  <button type="button" class="btn btn-danger">Yes</button>
+			</a>
+			<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+		      </div>
 		    </div>
 		  </div>
 		</div>
-	      </div>
-	      
-	      <% } %>
+		
+		<% } %>
 
+	      </div>
 	    </div>
 	  </div>
-	</div>
 
+	</div>
+	<% } %>
       </div>
-      <% } %>
-    </div>
+    </section>
   </section>
 
 </body>

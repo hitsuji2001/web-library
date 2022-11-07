@@ -13,7 +13,7 @@
     
     <section class="dashboard-header">
       <div class="header-container bg-info">
-	<a href="#" class="btn btn-warning rounded">
+	<a href="/" class="btn btn-warning rounded">
 	  <div class="logo-containter">
 	    <img src="/static/assets/images/reading.png" height=54px>
 	    <div class="logo-title">
@@ -25,6 +25,7 @@
       </div>
     </section>
 
+    <section class="content-after-header">
     <section class="server-alert" style="<%= locals.alert == undefined ? 'display:none' : 'display:block' %>">
       <div class="bg-danger mt-3 border rounded w-25">
 	<i class="fi fi-rr-exclamation"></i>
@@ -106,6 +107,7 @@
       </form>
     </section>
 
+    </section>
     <script>
       (function() {
 	  'use strict';
